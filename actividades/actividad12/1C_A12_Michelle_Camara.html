@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>División Sintética de Polinomios</title>
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&family=Playwrite+GB+J:ital,wght@0,100..400;1,100..400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==================== RESET BÁSICO ==================== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ==================== ESTRUCTURA GENERAL ==================== */
+    body {
+      font-family: "Lexend Deca", sans-serif;
+      background-color: #fdfcf9;
+      color: #39190F;
+      padding: 20px;
+      line-height: 1.6;
+      font-size: 16px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .container {
+      width: 100%;
+      max-width: 950px; /* corregido el espacio */
+      background-color: #fffaf5;
+      border: 3px solid #d8b99b;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 6px 6px 0 #b08968;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ==================== ENCABEZADOS ==================== */
+    .banner { text-align: center; margin-bottom: 10px; }
+    .h1 {
+      font-family: "Playwrite GB J", cursive;
+      text-align: center;
+      font-size: 26px;
+      color: #6f4e37;
+      background: #f3e5d0;
+      display: inline-block;
+      padding: 12px 25px;
+      border-radius: 15px;
+      border: 2px dashed #b08968;
+      box-shadow: 2px 2px 0 #a47551;
+    }
+    h1 {
+      animation-duration: 1.2s;
+      animation-name: slidein;
+      animation-direction: normal;
+      animation-iteration-count: 1;
+      animation-timing-function: ease-out;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+    @keyframes slidein {
+      from { transform: translateX(-100%); opacity: 0; }
+      to   { transform: translateX(0%); opacity: 1; }
+    }
+
+    .meta {
+      margin-top: 6px;
+      font-size: 14px;
+      color: #8c5c42;
+      animation: slidein 1.2s ease-out 1;
+    }
+
+    /* ==================== CAJAS DE INFO ==================== */
+    .instructions {
+      background-color: #f7ede2;
+      border: 2px solid #e3c9b1;
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 14px;
+      color: #5c4033;
+      border-right: 2px solid #a47551;
+      animation: blink-caret 0.7s step-end 7;
+      animation-fill-mode: forwards;
+    }
+    @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #a47551; } }
+    .instructions strong { color: #a47551; font-size: 16px; }
+    .instructions ul { margin-top: 8px; list-style-type: disc; padding-left: 20px; }
+
+    /* ==================== FORM SECTIONS ==================== */
+    .form-section {
+      gap: 16px;
+      background-color: #fffdf9;
+      border: 2px solid #e3c9b1;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 3px 3px 0 #d1a280;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      animation: fadein 0.8s ease-in forwards;
+    }
+    @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+
+    .form-section h2 {
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: #6f4e37;
+      border-bottom: 1px dashed #d8b99b;
+      padding-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .input-group { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 15px; color: #5c4033; }
+
+    label { font-weight: 700; color: #6f4e37; }
+
+    input[type="text"] {
+      flex: 1; min-width: 180px; padding: 10px 12px; border: 2px solid #d8b99b; border-radius: 10px;
+      background: #fdfaf6; font-family: "Courier New", monospace; text-align: center; color: #39190F;
+      transition: box-shadow .2s ease, border-color .2s ease;
+    }
+    input[type="text"]:focus { outline: none; border-color: #a47551; box-shadow: inset 2px 2px 0 #d8b99b; }
+
+    .example {
+      background: #fff7ef; border: 1px dashed #e3c9b1; border-radius: 10px; padding: 10px; font-size: 13px; color: #5c4033;
+    }
+
+    .btn-row { display: flex; flex-wrap: wrap; gap: 12px; }
+
+    .primary-btn, .clear-btn {
+      background: #d1a280; color: white; border: none; padding: 12px 20px; border-radius: 30px; font-size: 16px; font-weight: bold;
+      cursor: pointer; box-shadow: 3px 3px 0 #a47551; transition: transform .05s ease, box-shadow .05s ease, background .2s ease;
+    }
+    .primary-btn { background: #6f4e37; }
+    .primary-btn:hover { background: #5a3f2d; }
+    .clear-btn:hover { background: #6f4e37; box-shadow: 2px 2px 0 #39190F; }
+    .primary-btn:active, .clear-btn:active { box-shadow: none; transform: translateY(2px); }
+
+    .result-box {
+      background: #e5cbcc; padding: 12px; border-radius: 12px; font-family: "Courier New", monospace; font-size: 14px; color: #39190F;
+      font-weight: bold; border-left: 6px solid #6f4e37; box-shadow: inset 2px 2px 0 #d1a280;
+    }
+
+    /* ==================== TABLAS DE PROCESO ==================== */
+    .process-wrapper {
+      border: 2px solid #e3c9b1; border-radius: 12px; background: #fffdf9; padding: 16px; box-shadow: 3px 3px 0 #d1a280;
+    }
+    .process-title { color: #6f4e37; font-weight: 700; margin-bottom: 10px; }
+
+    .process-table { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 10px; border: 1px solid #e3c9b1; background: #ffffff; }
+    .process-table td { padding: 10px; text-align: center; border: 1px solid #f0e4d8; }
+    .process-table tr:first-child td { background: #6f4e37; color: white; font-weight: 600; }
+    .divisor-cell { background: #f7ede2; font-weight: 600; color: #5c4033; }
+
+    .final-result { background: #fff7ef; padding: 14px; border-radius: 10px; margin-top: 10px; border: 1px dashed #d8b99b; }
+    .final-result p { margin: 6px 0; }
+
+    .error { background: #ffebee; color: #c62828; padding: 15px; border-radius: 10px; border: 1px solid #ffcdd2; }
+
+    @media (max-width: 600px) { .input-group { flex-direction: column; align-items: stretch; } }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1 class="h1">División Sintética de Polinomios</h1>
+    <div class="banner">
+      <p class="meta">Tecnológico de Software · Fundamentos de Álgebra · Prof. Jorge Javier Pedrozo Romero · 1°C · Cuatrimestre 1 · Michelle Cámara González</p>
+    </div>
+
+    <div class="instructions">
+      <strong>✦ Instrucciones:</strong>
+      <ul>
+        <li>Ingresa un <b>polinomio</b> en formato algebraico y una <b>raíz</b> (puede ser real o compleja).</li>
+        <li>Ejemplos de polinomio: <code>5x^3 + 3x^2 + 2x + 1</code>, <code>x^3 - 6x^2 + 11x - 6</code>, <code>2x^2 + (3+2i)x + 1</code>.</li>
+        <li>Ejemplos de raíz: <code>2</code>, <code>-3</code>, <code>1+i</code>, <code>2-3i</code>.</li>
+        <li>Se mostrará el <b>proceso de multiplicar y bajar</b>, el <b>cociente</b> y el <b>residuo</b>.</li>
+      </ul>
+    </div>
+
+    <!-- Polinomio -->
+    <div class="form-section">
+      <h2>🍪 Polinomio</h2>
+      <div class="input-group">
+        <label for="polinomio">P(x) =</label>
+        <input type="text" id="polinomio" placeholder="Ej.: x^3 - 6x^2 + 11x - 6" />
+      </div>
+      <div class="example">
+        <strong>Ejemplos:</strong> 5x^3 + 3x^2 + 2x + 1 · x^4 - 1 · 2x^2 + (3+2i)x + 1
+      </div>
+      <div class="result-box" id="coeficientes-box">Coeficientes extraídos aparecerán aquí.</div>
+    </div>
+
+    <!-- Raíz / divisor -->
+    <div class="form-section">
+      <h2>🍵 Raíz (divisor)</h2>
+      <div class="input-group">
+        <label for="raiz">r =</label>
+        <input type="text" id="raiz" placeholder="Ej.: 2, -3, 1+i, 2-3i" />
+      </div>
+      <div class="btn-row">
+        <button class="primary-btn" id="btn-calcular">Calcular división sintética</button>
+        <button class="clear-btn" id="btn-limpiar">🍪 Limpiar todo</button>
+      </div>
+    </div>
+
+    <!-- Resultados -->
+    <div class="process-wrapper" id="resultado" style="display:none;"></div>
+  </div>
+
+  <script>
+    // ========================= NÚMEROS COMPLEJOS =========================
+    class NumeroComplejo {
+      constructor(real, imag = 0) { this.real = real; this.imag = imag; }
+      sumar(otro) { return new NumeroComplejo(this.real + otro.real, this.imag + otro.imag); }
+      multiplicar(otro) {
+        return new NumeroComplejo(
+          this.real * otro.real - this.imag * otro.imag,
+          this.real * otro.imag + this.imag * otro.real
+        );
+      }
+      toString() {
+        if (Math.abs(this.imag) < 1e-12) return this._fmt(this.real);
+        const r = this._fmt(this.real);
+        const i = this._fmt(Math.abs(this.imag));
+        const signo = this.imag >= 0 ? "+" : "-";
+        if (Math.abs(this.real) < 1e-12) return `${this.imag < 0 ? "-" : ""}${i}i`;
+        return `${r}${signo}${i}i`;
+      }
+      esReal() { return Math.abs(this.imag) < 1e-10; }
+      _fmt(n) {
+        const s = Number.parseFloat(n.toFixed(6)).toString();
+        return s.replace(/\.0+$/, "");
+      }
+    }
+
+    // ========================= PARSEO =========================
+    function parsearComplejo(str) {
+      str = (str || "").toString().trim().replace(/\s+/g, "");
+      // Sin 'i' → real puro
+      if (!/i/i.test(str)) return new NumeroComplejo(parseFloat(str || "0") || 0, 0);
+      // Remplazar 'i' y separar real/imag
+      const s = str.replace(/i/gi, "");
+      let real = 0, imag = 0;
+      // Casos tipo a+bi o a-bi
+      if (/(\+|-)(?=\d|\.)/.test(s.slice(1))) {
+        const partes = s.split(/(?=[+-])/);
+        real = parseFloat(partes[0]) || 0;
+        imag = parseFloat(partes[1]) || (partes[1] === "-" ? -1 : 1);
+      } else {
+        // Solo imaginario: "bi"
+        imag = parseFloat(s) || (s === "-" ? -1 : 1);
+      }
+      return new NumeroComplejo(real, imag);
+    }
+
+    function parsearPolinomio(str) {
+      str = (str || "").trim().replace(/\s+/g, "");
+      if (!str) return [new NumeroComplejo(0)];
+
+      // Detectar grado máximo
+      const exps = str.match(/x\^(\d+)/g);
+      let gradoMax = 0;
+      if (exps && exps.length) gradoMax = Math.max(...exps.map(m => parseInt(m.match(/\d+/)[0])));
+      else if (/x/.test(str)) gradoMax = 1; else gradoMax = 0;
+
+      // Coeficientes inicializados a 0
+      const coef = new Array(gradoMax + 1).fill(null).map(() => new NumeroComplejo(0));
+
+      // Hacer explícito el 1 en términos como +x o -x
+      str = str.replace(/(^|[+-])x(?![\w^])/g, m => m.replace("x", "1x"));
+
+      // Separar términos por +/-
+      const terminos = str.match(/[+-]?[^+-]+/g) || [];
+      for (let t of terminos) {
+        t = t.trim(); if (!t) continue;
+        let c, g;
+        if (!/x/.test(t)) { c = parsearComplejo(t); g = 0; }
+        else if (/x\^/.test(t)) { const [a, b] = t.split("x^"); c = (a === "" || a === "+") ? new NumeroComplejo(1) : (a === "-" ? new NumeroComplejo(-1) : parsearComplejo(a)); g = parseInt(b); }
+        else { const a = t.split("x")[0]; c = (a === "" || a === "+") ? new NumeroComplejo(1) : (a === "-" ? new NumeroComplejo(-1) : parsearComplejo(a)); g = 1; }
+        const idx = gradoMax - g;
+        coef[idx] = coef[idx].sumar(c);
+      }
+      return coef;
+    }
+
+    // ========================= DIVISIÓN SINTÉTICA =========================
+    function divisionSintetica(coeficientes, raiz) {
+      const n = coeficientes.length;
+      const proceso = [];
+      const resultado = [];
+
+      proceso.push([...coeficientes]);
+      proceso.push([new NumeroComplejo(0)]);
+      resultado.push(coeficientes[0]);
+
+      for (let i = 1; i < n; i++) {
+        const prod = resultado[i - 1].multiplicar(raiz);
+        proceso[1].push(prod);
+        resultado.push(coeficientes[i].sumar(prod));
+      }
+
+      return {
+        proceso,
+        resultado,
+        cociente: resultado.slice(0, -1),
+        residuo: resultado[resultado.length - 1],
+      };
+    }
+
+    // ========================= UI =========================
+    const $ = (sel) => document.querySelector(sel);
+
+    function renderCoeficientes(coeficientes) {
+      const etiquetas = coeficientes.map((_, i) => {
+        const exp = coeficientes.length - 1 - i;
+        if (exp === 0) return "Término independiente";
+        if (exp === 1) return "x";
+        return `x<sup>${exp}</sup>`;
+      });
+      const valores = coeficientes.map(c => c.toString());
+      $('#coeficientes-box').innerHTML = `<b>Coeficientes extraídos</b><br>\n<table class="process-table" style="margin-top:8px">\n<tr>${etiquetas.map(e => `<td><strong>${e}</strong></td>`).join("")}</tr>\n<tr>${valores.map(v => `<td>${v}</td>`).join("")}</tr>\n</table>`;
+    }
+
+    function mostrarResultado(data, coeficientes, raiz, polinomio) {
+      let html = "";
+      html += `<div class="process-title">Polinomio original</div>`;
+      html += `<div class="result-box" style="margin-bottom:12px;">P(x) = <strong>${polinomio}</strong></div>`;
+
+      html += `<div class="process-title">Proceso de división sintética</div>`;
+      html += `<table class="process-table">`;
+      html += `<tr><td class="divisor-cell">Divisor: ${raiz.toString()}</td>${coeficientes.map(c => `<td>${c.toString()}</td>`).join("")}</tr>`;
+      html += `<tr><td class="divisor-cell">Multiplicar y bajar</td>${data.proceso[1].map(p => `<td>${p.toString()}</td>`).join("")}</tr>`;
+      html += `<tr><td class="divisor-cell">Resultado (sumar)</td>${data.resultado.map(r => `<td>${r.toString()}</td>`).join("")}</tr>`;
+      html += `</table>`;
+
+      // Cociente como polinomio
+      let cocStr = "";
+      for (let i = 0; i < data.cociente.length; i++) {
+        const exp = data.cociente.length - 1 - i;
+        const c = data.cociente[i];
+        const isZero = Math.abs(c.real) < 1e-12 && Math.abs(c.imag) < 1e-12;
+        if (isZero) continue;
+        if (cocStr && (c.real > 0 || (Math.abs(c.real) < 1e-12 && c.imag > 0))) cocStr += " + ";
+        if (!cocStr && (c.real < 0 || (Math.abs(c.real) < 1e-12 && c.imag < 0))) cocStr += "- ";
+        const coefText = c.toString().replace(/^-/, "");
+        cocStr += `(${coefText})`;
+        if (exp > 0) {
+          cocStr += "x"; if (exp > 1) cocStr += `<sup>${exp}</sup>`;
+        }
+      }
+      if (!cocStr) cocStr = "0";
+
+      html += `<div class="final-result">`;
+      html += `<p><strong>Cociente:</strong> ${cocStr}</p>`;
+      html += `<p><strong>Residuo:</strong> ${data.residuo.toString()}</p>`;
+      if (data.residuo.esReal() && Math.abs(data.residuo.real) < 1e-10) {
+        html += `<p style="color:#5c4033;font-weight:700;">✓ La división es exacta (residuo = 0)</p>`;
+      }
+      html += `</div>`;
+
+      const cont = $('#resultado');
+      cont.style.display = 'block';
+      cont.innerHTML = html;
+    }
+
+    function calcularDivision() {
+      const polinomioStr = $('#polinomio').value;
+      const raizStr = $('#raiz').value;
+      const cont = $('#resultado');
+      if (!polinomioStr || !raizStr) {
+        cont.style.display = 'block';
+        cont.innerHTML = `<div class="error"><strong>Error:</strong> Por favor ingresa polinomio y raíz.</div>`;
+        return;
+      }
+      try {
+        const coeficientes = parsearPolinomio(polinomioStr);
+        renderCoeficientes(coeficientes);
+        const raiz = parsearComplejo(raizStr);
+        const data = divisionSintetica(coeficientes, raiz);
+        mostrarResultado(data, coeficientes, raiz, polinomioStr);
+      } catch (e) {
+        cont.style.display = 'block';
+        cont.innerHTML = `<div class="error"><strong>Error:</strong> ${e.message || e}</div>`;
+      }
+    }
+
+    function clearAll() {
+      ['polinomio', 'raiz'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+      $('#resultado').style.display = 'none';
+      $('#resultado').innerHTML = '';
+      $('#coeficientes-box').textContent = 'Coeficientes extraídos aparecerán aquí.';
+      $('#coeficientes-box').className = 'result-box';
+    }
+
+    // Eventos
+    document.getElementById('btn-calcular').addEventListener('click', calcularDivision);
+    document.getElementById('btn-limpiar').addEventListener('click', clearAll);
+  </script>
+</body>
+</html>

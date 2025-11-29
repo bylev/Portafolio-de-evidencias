@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora Simbólica de Ecuaciones</title>
+
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&family=Playwrite+GB+J:ital,wght@0,100..400;1,100..400&display=swap" rel="stylesheet" />
+
+    <!-- Math.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
+
+    <style>
+        /* ==================== RESET BÁSICO ==================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* ==================== ESTRUCTURA GENERAL ==================== */
+        body {
+            font-family: "Lexend Deca", sans-serif;
+            background-color: #fdfcf9;
+            color: #39190F;
+            padding: 20px;
+            line-height: 1.6;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 950px; /* corregido sin espacio */
+            background-color: #fffaf5;
+            border: 3px solid #d8b99b;
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 6px 6px 0 #b08968;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* ==================== ENCABEZADOS ==================== */
+        .banner { text-align: center; margin-bottom: 10px; }
+        .h1 {
+            font-family: "Playwrite GB J", cursive;
+            text-align: center;
+            font-size: 26px;
+            color: #6f4e37;
+            background: #f3e5d0;
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 15px;
+            border: 2px dashed #b08968;
+            box-shadow: 2px 2px 0 #a47551;
+        }
+        h1 {
+            animation-duration: 3s;
+            animation-name: slidein;
+            animation-direction: normal;
+            animation-iteration-count: 1;
+            animation-timing-function: ease-out;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        @keyframes slidein {
+            from { transform: translateX(-100%); }
+            to   { transform: translateX(0%); }
+        }
+
+        .meta {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #8c5c42;
+            animation: slidein 3s ease-out 1;
+        }
+
+        /* ==================== CAJA DE INSTRUCCIONES ==================== */
+        .instructions {
+            background-color: #f7ede2;
+            border: 2px solid #e3c9b1;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #5c4033;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #a47551;
+            animation: blink-caret 0.7s step-end 7;
+            animation-fill-mode: forwards;
+        }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #a47551; } }
+        .instructions strong { color: #a47551; font-size: 16px; }
+        .instructions ul { margin-top: 8px; list-style-type: disc; padding-left: 20px; white-space: normal; }
+
+        /* ==================== SECCIONES DE FORMULARIO ==================== */
+        .form-section {
+            background-color: #fffdf9;
+            border: 2px solid #e3c9b1;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 3px 3px 0 #d1a280;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            opacity: 0;
+            animation: fadein 1.2s ease-in forwards;
+        }
+        @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+        .form-section h2 {
+            font-size: 18px;
+            color: #6f4e37;
+            border-bottom: 1px dashed #d8b99b;
+            padding-bottom: 5px;
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            color: #5c4033;
+        }
+        label { font-weight: 700; color: #6f4e37; }
+        input[type="text"] {
+            flex: 1;
+            min-width: 180px;
+            padding: 10px 12px;
+            border: 2px solid #d8b99b;
+            border-radius: 8px;
+            background: #fdfaf6;
+            font-family: "Courier New", monospace;
+            text-align: left;
+            color: #39190F;
+        }
+        input[type="text"]:focus { outline: none; border-color: #a47551; box-shadow: inset 2px 2px 0 #d8b99b; }
+
+        .operator { font-weight: bold; color: #8c5c42; }
+
+        .btn {
+            background: #d1a280;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 3px 3px 0 #a47551;
+        }
+        .btn:hover { background: #6f4e37; box-shadow: 2px 2px 0 #39190F; }
+        .btn:active { box-shadow: none; transform: translateY(2px); }
+
+        .clear-btn {
+            background: #d1a280;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 3px 3px 0 #a47551;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadein 1.2s ease-in forwards;
+        }
+        .clear-btn:hover { background: #6f4e37; box-shadow: 2px 2px 0 #39190F; }
+        .clear-btn:active { box-shadow: none; transform: translateY(2px); }
+
+        /* ==================== RESULTADOS & ERRORES ==================== */
+        .result {
+            background: #e5cbcc;
+            padding: 12px;
+            border-radius: 10px;
+            font-family: "Courier New", monospace;
+            font-size: 14px;
+            color: #39190F;
+            font-weight: bold;
+            border-left: 6px solid #6f4e37;
+            box-shadow: inset 2px 2px 0 #d1a280;
+        }
+        .error-message { color: #b00020; font-weight: 700; min-height: 20px; }
+
+        /* ==================== TABLAS DENTRO DE RESULTADOS ==================== */
+        .result table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #fffaf5; }
+        .result thead { background: #6f4e37; color: #fff; }
+        .result th, .result td { padding: 10px; border: 1px solid #d8b99b; text-align: left; }
+        .result tbody tr:nth-child(even) { background: #f9f1ea; }
+        .result pre { margin: 0; white-space: pre-wrap; word-wrap: break-word; font-family: "Courier New", monospace; }
+
+        @media (max-width: 600px) { .input-group { flex-direction: column; align-items: stretch; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><span class="h1">Calculadora Simbólica de Ecuaciones</span></h1>
+        <div class="banner">
+            <p class="meta">Herramienta educativa · Álgebra básica y manipulación simbólica · Michelle Cámara González</p>
+        </div>
+
+        <div class="instructions">
+            <strong>✦ Instrucciones:</strong>
+            <ul>
+                <li>En la sección 1, escribe una ecuación con <strong>x</strong> y presiona <em>Resolver</em>.</li>
+                <li>En la sección 2, escribe una fórmula literal y genera despejes para cada variable.</li>
+                <li>Se admiten sumas, restas, productos, cocientes y paréntesis. La resolución lineal asume forma <em>ax + b = 0</em>.</li>
+            </ul>
+        </div>
+
+        <!-- ==================== 1) ECUACIONES LINEALES (x) ==================== -->
+        <section class="form-section" id="sec-lineal">
+            <h2>🍪 1. Ecuaciones de una variable (x)</h2>
+            <div class="input-group">
+                <label for="ecuacion">Ecuación:</label>
+                <input type="text" id="ecuacion" placeholder="Ej.: 2x + 3 = x + 8" value=""/>
+                <button class="btn" onclick="resolverEcuacionParseada()">Resolver</button>
+                <button class="btn" onclick="limpiarLinea1()">Limpiar</button>
+            </div>
+            <div id="resDespejeParseado" class="result">Ingresa la ecuación arriba</div>
+            <div id="mensajeError" class="error-message"></div>
+        </section>
+
+        <!-- ==================== 2) DESPEJE SIMBÓLICO ==================== -->
+        <section class="form-section" id="sec-formulas">
+            <h2>🍵 2. Despeje Simbólico de Fórmulas</h2>
+            <div class="input-group">
+                <label for="formulaLiteral">Fórmula:</label>
+                <input type="text" id="formulaLiteral" placeholder="Ej.: C = 5(F - 32)/9" value="" />
+                <button class="btn" onclick="procesarFormulaLiteral()">Generar despejes</button>
+                <button class="btn" onclick="limpiarLinea2()">Limpiar</button>
+            </div>
+            <div id="resFormulaLiteral" class="result">Ingresa una fórmula arriba</div>
+            <div id="mensajeErrorFormula" class="error-message"></div>
+        </section>
+
+        <button class="clear-btn" onclick="clearAll()">🍪 Limpiar Todo</button>
+    </div>
+
+<script>
+// ==================== UTILIDAD ====================
+function cleanString(str) { return (str || '').replace(/\s+/g, ''); }
+
+// ==================== PARTE 1: ECUACIONES LINEALES (x) ====================
+function resolverEcuacionParseada() {
+    const ecuacionStr = document.getElementById('ecuacion').value;
+    const resBox = document.getElementById('resDespejeParseado');
+    const errorBox = document.getElementById('mensajeError');
+    resBox.innerHTML = 'Procesando...';
+    errorBox.textContent = '';
+
+    try {
+        const partes = ecuacionStr.split('=');
+        if (partes.length !== 2) throw new Error("La ecuación debe contener exactamente un signo '='");
+        const ladoIzq = partes[0].trim();
+        const ladoDer = partes[1].trim();
+        const ecuacionFormateada = `(${ladoIzq}) - (${ladoDer})`;
+
+        const nodo = math.parse(ecuacionFormateada);
+        const simplificado = math.simplify(nodo);
+
+        const { a, b } = extraerCoeficientes(simplificado.toString());
+        if (!isFinite(a) || Math.abs(a) < 1e-12) {
+            throw new Error('La ecuación no es lineal en x o el coeficiente de x es cero.');
+        }
+        const x = -b / a;
+
+        resBox.innerHTML = `
+            <div><strong>Ecuación original:</strong> ${ecuacionStr}</div>
+            <div><strong>Forma simplificada:</strong> ${simplificado.toString()} = 0</div>
+            <div><strong>Solución:</strong> x = ${x}</div>
+        `;
+    } catch (err) {
+        resBox.textContent = '—';
+        errorBox.textContent = 'Error: ' + err.message;
+    }
+}
+
+function extraerCoeficientes(exp) {
+    let ecuacion = (exp || '').replace(/\s+/g, '');
+    let a = 0, b = 0;
+
+    // Coeficientes de x
+    const regexX = /([+-]?\d*\.?\d*)\*?x/g;
+    let m;
+    while ((m = regexX.exec(ecuacion)) !== null) {
+        let c = m[1];
+        if (c === '' || c === '+') c = '1';
+        if (c === '-') c = '-1';
+        a += parseFloat(c);
+    }
+
+    // Término independiente: eliminar los términos con x y evaluar lo restante
+    const sinX = ecuacion.replace(/[+-]?\d*\.?\d*\*?x/g, '');
+    if (sinX) {
+        try { b = math.evaluate(sinX); } catch { b = 0; }
+    }
+    return { a, b };
+}
+
+function limpiarLinea1() {
+    document.getElementById('ecuacion').value = '';
+    document.getElementById('resDespejeParseado').textContent = 'Ingresa la ecuación arriba';
+    document.getElementById('mensajeError').textContent = '';
+}
+
+// ==================== PARTE 2: DESPEJE SIMBÓLICO ====================
+function extractVariables(formulaStr) {
+    const matches = (formulaStr || '').match(/[a-zA-Z][a-zA-Z0-9]*/g);
+    return matches ? Array.from(new Set(matches)) : [];
+}
+
+function dividirPorOperadorPrincipal(expresion, operador) {
+    let nivel = 0, idx = -1;
+    for (let i = expresion.length - 1; i >= 0; i--) {
+        const ch = expresion[i];
+        if (ch === ')') nivel++;
+        else if (ch === '(') nivel--;
+        else if (ch === operador && nivel === 0) { idx = i; break; }
+    }
+    if (idx === -1) return [expresion];
+    return [expresion.substring(0, idx), expresion.substring(idx + 1)];
+}
+
+function extraerFactoresMultiplicacion(expresion) {
+    const factores = []; let actual = ''; let nivel = 0;
+    for (let i = 0; i < expresion.length; i++) {
+        const ch = expresion[i];
+        if (ch === '(') { nivel++; actual += ch; }
+        else if (ch === ')') { nivel--; actual += ch; }
+        else if (ch === '*' && nivel === 0) { if (actual) { factores.push(actual); actual=''; } }
+        else { actual += ch; }
+    }
+    if (actual) factores.push(actual);
+    return factores;
+}
+
+function parsearTerminos(expresion) {
+    const terminos = []; let actual = ''; let signo = '+'; let nivel = 0;
+    for (let i = 0; i < expresion.length; i++) {
+        const ch = expresion[i];
+        if (ch === '(') { nivel++; actual += ch; }
+        else if (ch === ')') { nivel--; actual += ch; }
+        else if ((ch === '+' || ch === '-') && nivel === 0 && actual !== '') { terminos.push({ signo, texto: actual }); signo = ch; actual = ''; }
+        else if ((ch === '+' || ch === '-') && nivel === 0 && actual === '') { signo = ch; }
+        else { actual += ch; }
+    }
+    if (actual) terminos.push({ signo, texto: actual });
+    return terminos;
+}
+
+function despejarSumaResta(expresion, variableObjetivo, variableDespejada) {
+    const terminos = parsearTerminos(expresion);
+    let terminoConVar = null; const otros = [];
+    for (const t of terminos) { if (t.texto.includes(variableObjetivo)) terminoConVar = t; else otros.push(t); }
+    if (!terminoConVar) return null;
+
+    let resultado = variableDespejada;
+    for (const t of otros) {
+        const inv = t.signo === '+' ? '-' : '+';
+        resultado += ` ${inv} ${t.texto}`;
+    }
+
+    if (terminoConVar.texto !== variableObjetivo && terminoConVar.texto.includes('*')) {
+        const partes = terminoConVar.texto.split('*');
+        const coef = partes.find(p => p !== variableObjetivo);
+        if (coef) resultado = `(${resultado}) / (${coef})`;
+    }
+    if (terminoConVar.signo === '-') resultado = `-(${resultado})`;
+    return resultado;
+}
+
+function despejarVariable(expresionOriginal, variableObjetivo, variableDespejada) {
+    try {
+        let expresion = (expresionOriginal || '').replace(/\s+/g, '');
+
+        // Caso tipo k*(V ± c)/d
+        const patron = /(\d*\.?\d*)\(([a-zA-Z]+)\s*([+-])\s*(\d+\.?\d*)\)\s*\/\s*(\d+\.?\d*)/;
+        const m = expresion.match(patron);
+        if (m && m[2] === variableObjetivo) {
+            const coef1 = m[1] || '1';
+            const op = m[3];
+            const c = m[4];
+            const d = m[5];
+            const inv = op === '-' ? '+' : '-';
+            if (coef1 === '1') return `(${variableDespejada}) * (${d}) ${inv} ${c}`;
+            return `(${variableDespejada}) * (${d}) / (${coef1}) ${inv} ${c}`;
+        }
+
+        // Sumas/restas
+        if (expresion.includes('+') || expresion.includes('-')) {
+            const r = despejarSumaResta(expresion, variableObjetivo, variableDespejada);
+            if (r !== null) return r;
+        }
+
+        // División
+        if (expresion.includes('/')) {
+            const [num, den] = dividirPorOperadorPrincipal(expresion, '/');
+            if (num.includes(variableObjetivo)) {
+                if (num === variableObjetivo) return `(${variableDespejada}) * (${den})`;
+                const f = extraerFactoresMultiplicacion(num);
+                const otros = f.filter(x => x !== variableObjetivo);
+                return otros.length ? `(${variableDespejada}) * (${den}) / (${otros.join(' * ')})` : `(${variableDespejada}) * (${den})`;
+            } else if (den.includes(variableObjetivo)) {
+                if (den === variableObjetivo) return `(${num}) / (${variableDespejada})`;
+                const f = extraerFactoresMultiplicacion(den);
+                const otros = f.filter(x => x !== variableObjetivo);
+                return otros.length ? `(${num}) / ((${variableDespejada}) * (${otros.join(' * ')}))` : `(${num}) / (${variableDespejada})`;
+            }
+        }
+
+        // Multiplicación simple
+        if (expresion.includes('*')) {
+            const f = extraerFactoresMultiplicacion(expresion);
+            const otros = f.filter(x => x !== variableObjetivo);
+            if (otros.length === 0) return variableDespejada;
+            if (otros.length === 1) return `(${variableDespejada}) / (${otros[0]})`;
+            return `(${variableDespejada}) / (${otros.join(' * ')})`;
+        }
+
+        // Variable sola
+        if (expresion === variableObjetivo) return variableDespejada;
+        return expresion;
+    } catch (e) { return `Error: ${e.message}`; }
+}
+
+function procesarFormulaLiteral() {
+    const formulaStr = document.getElementById('formulaLiteral').value;
+    const resBox = document.getElementById('resFormulaLiteral');
+    const errorBox = document.getElementById('mensajeErrorFormula');
+
+    resBox.innerHTML = 'Procesando...';
+    errorBox.textContent = '';
+
+    try {
+        const partes = formulaStr.split('=');
+        if (partes.length !== 2) throw new Error("La fórmula debe contener exactamente un signo '='");
+        const ladoIzq = partes[0].trim();
+        const ladoDer = partes[1].trim();
+
+        const variables = extractVariables(formulaStr);
+        if (variables.length < 2) throw new Error('Se necesitan al menos 2 variables distintas en la fórmula');
+
+        let html = `
+            <div><strong>Fórmula original:</strong> ${formulaStr}</div>
+            <div><strong>Variables detectadas:</strong> ${variables.join(', ')}</div>
+            <table>
+                <thead><tr><th>Variable</th><th>Despeje</th></tr></thead>
+                <tbody>
+        `;
+
+        for (const v of variables) {
+            let despeje;
+            if (ladoIzq === v) {
+                despeje = `${v} = ${ladoDer}`;
+            } else {
+                const r = despejarVariable(ladoDer, v, ladoIzq);
+                despeje = `${v} = ${r}`;
+            }
+            html += `<tr><td><strong>${v}</strong></td><td><pre>${despeje}</pre></td></tr>`;
+        }
+
+        html += '</tbody></table>';
+        resBox.innerHTML = html;
+    } catch (err) {
+        resBox.textContent = '—';
+        errorBox.textContent = 'Error: ' + err.message;
+    }
+}
+
+function limpiarLinea2() {
+    document.getElementById('formulaLiteral').value = '';
+    document.getElementById('resFormulaLiteral').textContent = 'Ingresa una fórmula arriba';
+    document.getElementById('mensajeErrorFormula').textContent = '';
+}
+
+// ==================== AUX / INICIALIZACIÓN ====================
+function clearAll() {
+    ['ecuacion','formulaLiteral'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('resDespejeParseado').textContent = 'Ingresa la ecuación arriba';
+    document.getElementById('resFormulaLiteral').textContent = 'Ingresa una fórmula arriba';
+    document.getElementById('mensajeError').textContent = '';
+    document.getElementById('mensajeErrorFormula').textContent = '';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    resolverEcuacionParseada();
+});
+</script>
+</body>
+</html>

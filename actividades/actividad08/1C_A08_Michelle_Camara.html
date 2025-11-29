@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Calculadora de Variables - Números Complejos</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&family=Playwrite+GB+J:ital,wght@0,100..400;1,100..400&display=swap" rel="stylesheet" rel="stylesheet">
+
+  <style>
+    /* ==================== RESET BÁSICO ==================== */
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    /* ==================== ESTRUCTURA GENERAL ==================== */
+    body{
+      font-family:"Lexend Deca",sans-serif;
+      background-color: #fdfcf9;
+      color: #39190F;
+      padding:20px;
+      line-height:1.6;
+      font-size:16px;
+      display:flex;justify-content:center;align-items:flex-start;
+    }
+
+    .container{
+      width:100%;
+      max-width:950px;
+      background-color: #fffaf5;
+      border:3px solid #d8b99b;
+      border-radius:8px;
+      padding:28px;
+      box-shadow:6px 6px 0 #b08968;
+      display:flex;
+      flex-direction:column;
+      gap:22px;
+      animation:fadein .8s ease-in forwards;
+    }
+    @keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+    /* ==================== ENCABEZADOS ==================== */
+    .banner{text-align:center;margin-bottom:8px}
+    .title{
+      font-family:"Playwrite GB J",cursive;
+      font-size:26px;
+      color:#6f4e37;
+      background:#f3e5d0;
+      display:inline-block;
+      padding:12px 22px;
+      border-radius:14px;
+      border:2px dashed #b08968;
+      box-shadow:2px 2px 0 #a47551;
+      animation:slidein 1s ease-out both;
+    }
+    @keyframes slidein{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+
+    .meta{
+      margin-top:6px;
+      font-size:14px;
+      color:#8c5c42;
+      animation:slidein 1s .1s ease-out both;
+    }
+
+    /* ==================== INSTRUCCIONES ==================== */
+    .instructions{
+      background:#f7ede2;
+      border:2px solid #e3c9b1;
+      padding:14px 16px;
+      border-radius:10px;
+      color:#5c4033;
+      box-shadow:3px 3px 0 #b08968;
+    }
+    .instructions strong{color:#a47551}
+    .instructions ul{margin-top:6px;list-style:disc;padding-left:20px}
+
+    /* ==================== FORM ==================== */
+    .form{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:18px;
+      background:#fffdf9;
+      border:2px solid #e3c9b1;
+      border-radius:15px;
+      padding:20px;
+      box-shadow:3px 3px 0 #b08968;
+    }
+
+    .field-group{display:flex;flex-direction:column;gap:8px}
+    label{font-weight:600;color:#6f4e37}
+    textarea{
+      width:100%;
+      min-height:110px;
+      padding:12px 14px;
+      border:2px solid #d8b99b;
+      border-radius:10px;
+      background:#fdfaf6;
+      color:#39190F;
+      font-family:"Courier New",monospace;
+      font-size:15px;
+      transition:border-color .2s, box-shadow .2s;
+      resize:vertical;
+    }
+    textarea:focus{
+      outline:none;
+      border-color:#a47551;
+      box-shadow:inset 2px 2px 0 #e6d5c6;
+    }
+    textarea::placeholder{color:#9c7f6b}
+
+    .btn{
+      appearance:none;border:none;cursor:pointer;
+      background:#a47551;color:white;
+      font-weight:700;font-size:16px;
+      padding:12px 20px;border-radius:28px;
+      box-shadow:3px 3px 0 #6f4e37;
+      transition:transform .05s, box-shadow .05s, background .2s;
+      width:220px;justify-self:center;
+    }
+    .btn:hover{background:#6f4e37}
+    .btn:active{transform:translateY(2px);box-shadow:1px 1px 0 #6f4e37}
+
+    /* ==================== RESULTADOS ==================== */
+    .card{
+      background:#fffdf9;
+      border:2px solid #d8b99b;
+      border-radius:12px;
+      padding:16px 18px;
+      box-shadow:3px 3px 0 #b08968;
+    }
+    .card h3{
+      color:#6f4e37;
+      font-size:18px;
+      border-bottom:1px dashed #d8b99b;
+      padding-bottom:8px;margin-bottom:10px;
+    }
+    .result{
+      font-family:"Courier New",monospace;
+      font-size:15px;
+      background:#f9f3eb;
+      color:#39190F;
+      padding:12px 14px;border-radius:10px;
+      border-left:6px solid #6f4e37;
+      white-space:pre-wrap;
+      min-height:56px;
+    }
+
+    .result-warning{background:#fff4e5;border-left-color:#f59e0b}
+    .result-error{background:#ffecec;border-left-color:#d24d57}
+    .result-success{background:#ecf8f2;border-left-color:#2f855a}
+
+    @media (max-width:640px){
+      .btn{width:100%}
+    }
+    /* ==================== FIN DE ESTILOS ==================== */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="banner">
+      <h1 class="title">Calculadora de Funciones</h1>
+      <p class="meta">Tecnológico de Software · Fundamentos de Álgebra · 1°C · Prof. Jorge Javier Pedrozo Romero · Michelle Cámara González</p>
+    </div>
+
+    <div class="instructions">
+      <strong>✦ Cómo usar:</strong>
+      <ul>
+        <li>En <em>Variables</em> puedes declarar en cualquier orden (ej: <code>w1 = 1, w2 = 3, feature = w1 + w2</code>).</li>
+        <li>En <em>Ecuaciones</em> puedes poner asignaciones (<code>x = w1*w2</code>) o expresiones (<code>w1 + w2</code>).</li>
+        <li>Potencia: usa <code>^</code> (se convierte a <code>**</code>).</li>
+      </ul>
+    </div>
+
+    <div class="form">
+      <div class="field-group">
+        <label for="variables">Variables:</label>
+        <textarea id="variables" placeholder="Ejemplo: feature_cost = w1 + w2 + w3, w1 = 1, w2 = 3, w3 = 4"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label for="equations">Ecuaciones:</label>
+        <textarea id="equations" placeholder="Ejemplo: feature_cost = w1 * w2 + w3&#10;"></textarea>
+      </div>
+
+      <button id="calculate-btn" class="btn">🍪 Calcular</button>
+    </div>
+    <button id="clear-btn" class="btn" type="button" style="background:#d24d57;box-shadow:3px 3px 0 #a94442;margin-top:-8px;display:block;margin-left:auto;margin-right:auto;">🧹 Limpiar</button>
+
+    <div class="card">
+      <h3>Resultado</h3>
+      <div id="result" class="result">Ingresa las variables y ecuaciones para ver el resultado</div>
+    </div>
+  </div>
+
+  <script>
+    // ==================== LÓGICA ====================
+    class Calculator {
+      constructor(){
+        this.variablesInput = document.getElementById('variables');
+        this.equationsInput = document.getElementById('equations');
+        this.calculateButton = document.getElementById('calculate-btn');
+        this.resultDiv = document.getElementById('result');
+        this.init();
+      }
+
+      init(){
+        this.calculateButton.addEventListener('click', () => this.calculate());
+        const onCtrlEnter = (e)=>{ if(e.key==='Enter' && e.ctrlKey) this.calculate(); };
+        this.variablesInput.addEventListener('keydown', onCtrlEnter);
+        this.equationsInput.addEventListener('keydown', onCtrlEnter);
+      }
+
+      // Parseo con múltiples pasadas (soporta cualquier orden)
+      parseVariables(variablesText){
+        const variables = {};
+        const assignments = [];
+        const lines = variablesText.split('\n').filter(l=>l.trim());
+
+        for(const line of lines){
+          const parts = line.split(',').map(p=>p.trim()).filter(Boolean);
+          for(const part of parts){
+            const m = part.match(/^(\w+)\s*=\s*(.+)$/);
+            if(m){
+              const [,name,expr] = m;
+              assignments.push({name:name.trim(), expr:expr.trim()});
+            }else{
+              const name = part.trim();
+              if(name && !Object.prototype.hasOwnProperty.call(variables,name)){
+                variables[name] = 0;
+              }
+            }
+          }
+        }
+
+        let pending = new Map(assignments.map(a=>[a.name,a.expr]));
+        let changed = true, passes = 0;
+        const maxPasses = Math.max(2*pending.size, 10);
+
+        while(changed && pending.size && passes < maxPasses){
+          changed = false; passes++;
+          for(const [name,expr] of Array.from(pending.entries())){
+            try{
+              const val = this.evaluateExpression(expr, variables);
+              variables[name] = val;
+              pending.delete(name);
+              changed = true;
+            }catch{/* aún no resuelve; siguiente pasada */}
+          }
+        }
+
+        if(pending.size){
+          const detalles = Array.from(pending.entries()).map(([n,e])=>`${n} = ${e}`).join('; ');
+          throw new Error(`No se pudieron resolver: ${Array.from(pending.keys()).join(', ')}. Revísalas: ${detalles}`);
+        }
+
+        return variables;
+      }
+
+      evaluateExpression(expression, variables){
+        // sólo caracteres seguros
+        if(!/^[a-zA-Z0-9+\-*/().\s^]+$/.test(expression)){
+          throw new Error(`Expresión contiene caracteres no válidos: ${expression}`);
+        }
+        let expr = expression.replace(/\^/g,'**');
+
+        // sustituir variables
+        for(const [k,v] of Object.entries(variables)){
+          const re = new RegExp(`\\b${k}\\b`, 'g');
+          expr = expr.replace(re, String(v));
+        }
+
+        if(/[a-zA-Z]/.test(expr)){
+          const undef = [...new Set(expr.match(/[a-zA-Z]+/g) || [])];
+          throw new Error(`Variables sin definir: ${undef.join(', ')}`);
+        }
+
+        try{
+          return Function('"use strict"; return ('+expr+')')();
+        }catch{
+          throw new Error(`Error al evaluar: ${expr}`);
+        }
+      }
+
+      calculate(){
+        try{
+          const variablesText = this.variablesInput.value.trim();
+          const equationsText = this.equationsInput.value.trim();
+
+          if(!variablesText && !equationsText){
+            this.showResult('Por favor ingresa las variables y ecuaciones','error');
+            return;
+          }
+
+          const variables = this.parseVariables(variablesText);
+
+          const equations = equationsText.split('\n').map(l=>l.trim()).filter(Boolean);
+          const results = [];
+
+          for(const eq of equations){
+            const m = eq.match(/^(\w+)\s*=\s*(.+)$/);
+            if(m){
+              const [,name,expr] = m;
+              const val = this.evaluateExpression(expr, variables);
+              variables[name] = val;
+              results.push(`${name} = ${val}`);
+            }else{
+              const val = this.evaluateExpression(eq, variables);
+              results.push(`${eq} = ${val}`);
+            }
+          }
+
+          if(results.length === 0){
+            // Si no hay ecuaciones, listar todas las variables resueltas
+            const lines = Object.entries(variables)
+              .map(([k,v])=>`${k} = ${v}`)
+              .sort((a,b)=>a.localeCompare(b));
+            this.showResult(lines.join('\n'),'success');
+          }else{
+            this.showResult(results.join('\n'),'success');
+          }
+
+        }catch(err){
+          this.showResult(`Error: ${err.message}`,'error');
+        }
+      }
+
+      showResult(message, type='success'){
+        this.resultDiv.textContent = message;
+        this.resultDiv.classList.remove('result-success','result-warning','result-error');
+        if(type==='error') this.resultDiv.classList.add('result-error');
+        else if(type==='warning') this.resultDiv.classList.add('result-warning');
+        else this.resultDiv.classList.add('result-success');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', ()=> new Calculator());
+          document.addEventListener('DOMContentLoaded', function() {
+        const clearBtn = document.getElementById('clear-btn');
+        const variablesInput = document.getElementById('variables');
+        const equationsInput = document.getElementById('equations');
+        const resultDiv = document.getElementById('result');
+        if (clearBtn) {
+          clearBtn.addEventListener('click', function() {
+            variablesInput.value = '';
+            equationsInput.value = '';
+            resultDiv.textContent = 'Ingresa las variables y ecuaciones para ver el resultado';
+            resultDiv.classList.remove('result-success','result-warning','result-error');
+          });
+        }
+      });
+  </script>
+</body>
+</html>
