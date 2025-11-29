@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lexend Deca", system-ui, sans-serif;
+  background: #fdfcf9;
+  color: #39190F;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  max-width: 960px;
+  width: 100%;
+  background: #fffaf5;
+  border: 3px solid #d8b99b;
+  border-radius: 12px;
+  padding: 32px 28px;
+  box-shadow: 6px 6px 0 #b08968;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 8px;
+  color: #6f4e37;
+}
+
+p {
+  margin-bottom: 20px;
+  color: #6b4b39;
+}
+
+.grid-actividades {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.card-actividad {
+  display: block;
+  padding: 16px;
+  border-radius: 10px;
+  border: 2px solid #d8b99b;
+  background: #fffdf9;
+  text-decoration: none;
+  color: #39190F;
+  box-shadow: 3px 3px 0 #b08968;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
+}
+
+.card-actividad h3 {
+  margin-bottom: 4px;
+  font-size: 18px;
+}
+
+.card-actividad p {
+  margin: 0;
+  font-size: 14px;
+  color: #7a5a46;
+}
+
+.card-actividad:hover {
+  background: #f7e9d9;
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 #a47551;
+}
