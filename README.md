@@ -4,6 +4,17 @@
 ## Actividad: Portafolio de evidencias - Unidad 3
 
 ---
+# Índice
+- [Objetivo del portafolio](#objetivo-del-portafolio)
+- [Estructura del portafolio](#estructura-del-portafolio)
+- [Descripción del proyecto](#descripción-del-proyecto)
+- [Instrucciones para ejecutar el portafolio](#instrucciones-para-ejecutar-el-portafolio)
+- [Descripción de las actividades incluidas](#descripcion-de-las-actividades-incluidas)
+- [Estilos y scripts](#estilos-y-scripts)
+- [Demostración en línea](#demostración-en-línea)
+- [Agradecimientos](#agradecimientos)
+
+---
 
 # Objetivo del portafolio
 
@@ -104,6 +115,9 @@ git clone https://github.com/bylev/Portafolio-de-evidencias.git
 ---
 
 # Demostración en línea
+---
+
+[!Badge](https://img.shields.io/badge/entrar?style=for-the-badge&logo=github&logoColor=b89f7a&logoSize=auto&label=Portafolio&labelColor=6f4e37&color=b89f7a&link=https%3A%2F%2Fbylev.github.io%2FPortafolio-de-evidencias%2F)
 
 ----
 
