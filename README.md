@@ -117,8 +117,9 @@ git clone https://github.com/bylev/Portafolio-de-evidencias.git
 # Demostración en línea
 ---
 
-[!Badge](https://img.shields.io/badge/entrar?style=for-the-badge&logo=github&logoColor=b89f7a&logoSize=auto&label=Portafolio&labelColor=6f4e37&color=b89f7a&link=https%3A%2F%2Fbylev.github.io%2FPortafolio-de-evidencias%2F)
+El portafolio está disponible en línea para su visualización y uso en la siguiente URL:
 
+🌐 [Portafolio de Evidencias - Unidad 3](https://bylev.github.io/Portafolio-de-evidencias/)
 ----
 
 # Agradecimientos
