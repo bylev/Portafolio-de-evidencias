@@ -68,7 +68,7 @@
         /* ==================== GRID DE ACTIVIDADES ==================== */
         .grid-actividades {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             opacity: 0;
             animation: fadein 1.2s ease-in forwards;
@@ -116,3 +116,8 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .act14{
+          justify-self: center;
+        }
+
