@@ -177,6 +177,26 @@
             background: #6f4e37;
         }
 
+        .back-btn {
+            background: #8c5c42;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 3px 3px 0 #6f4e37;
+            display: block;
+            margin: 10px auto 0;
+            text-decoration: none;
+            text-align: center;
+            width: fit-content;
+            transition: transform .02s ease, box-shadow .2s ease;
+        }
+        .back-btn:hover { background: #39190F; box-shadow: 2px 2px 0 #6f4e37; }
+        .back-btn:active { box-shadow: none; transform: translateY(2px); }
+
     .preset-section{ margin-top:18px; }
     .preset-numbers{
       margin-top:10px;
@@ -486,9 +506,8 @@
         </div>
         <button type="button" class="btn primary" onclick="addNumber()">Agregar número</button>
         <button type="button" class="btn danger" onclick="clearAll()">Limpiar todo</button>
-      </div>
-
-      <div class="preset-section">
+    
+    </div>      <div class="preset-section">
         <h3>Números predefinidos</h3>
         <p>Haz clic en cualquier número para agregarlo automáticamente:</p>
         <div class="preset-numbers">
@@ -587,7 +606,11 @@
             <div><strong>Calculadora de distancias</strong></div>
             <div>Los resultados aparecerán aquí</div>
           </div>
+          </div>
         </div>
+          <div class="distance-placegolder">
+            <a href="../../index.html" class="back-btn">← Regresar al Portafolio</a>
+          </
       </div>
     </section>
   </div>

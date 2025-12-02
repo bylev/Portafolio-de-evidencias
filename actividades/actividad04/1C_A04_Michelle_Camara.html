@@ -212,6 +212,28 @@
             box-shadow: none;
             transform: translateY(2px);
     }
+    .back-btn {
+        background: #8c5c42;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 30px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 3px 3px 0 #6f4e37;
+        display: block;
+        margin: 10px auto;
+        text-decoration: none;
+        text-align: center;
+        width: fit-content;
+        opacity: 0;
+        animation: fadein 1.2s ease-in forwards;
+        animation-delay: 0.3s;
+    }
+    .back-btn:hover { background: #39190F; box-shadow: 2px 2px 0 #6f4e37; }
+    .back-btn:active { box-shadow: none; transform: translateY(2px); }
+
     @media (max-width: 600px) {
         .form-section {
             grid-template-columns: 1fr;
@@ -276,6 +298,7 @@
             <div class="result" id="exponential-result">Ingresa los valores arriba</div>
         </div>
         <button class="clear-btn" onclick="clearAll()">🍪 Limpiar Todo</button>
+        <a href="../../index.html" class="back-btn">← Regresar al Portafolio</a>
     </div>
 </body>
 <script>

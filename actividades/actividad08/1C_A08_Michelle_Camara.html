@@ -147,6 +147,28 @@
     .result-error{background:#ffecec;border-left-color:#d24d57}
     .result-success{background:#ecf8f2;border-left-color:#2f855a}
 
+    .back-btn {
+        background: #8c5c42;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 30px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 3px 3px 0 #6f4e37;
+        display: block;
+        margin: 10px auto;
+        text-decoration: none;
+        text-align: center;
+        width: fit-content;
+        opacity: 0;
+        animation: fadein 1.2s ease-in forwards;
+        animation-delay: 0.3s;
+    }
+    .back-btn:hover { background: #39190F; box-shadow: 2px 2px 0 #6f4e37; }
+    .back-btn:active { box-shadow: none; transform: translateY(2px); }
+
     @media (max-width:640px){
       .btn{width:100%}
     }
@@ -188,6 +210,8 @@
       <h3>Resultado</h3>
       <div id="result" class="result">Ingresa las variables y ecuaciones para ver el resultado</div>
     </div>
+
+    <a href="../../index.html" class="back-btn">← Regresar al Portafolio</a>
   </div>
 
   <script>

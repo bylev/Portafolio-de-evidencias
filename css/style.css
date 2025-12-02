@@ -1,70 +1,118 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-body {
-  font-family: "Lexend Deca", system-ui, sans-serif;
-  background: #fdfcf9;
-  color: #39190F;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-}
+        /* ==================== RESET BÁSICO ==================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-.container {
-  max-width: 960px;
-  width: 100%;
-  background: #fffaf5;
-  border: 3px solid #d8b99b;
-  border-radius: 12px;
-  padding: 32px 28px;
-  box-shadow: 6px 6px 0 #b08968;
-}
+        /* ==================== ESTRUCTURA GENERAL ==================== */
+        body {
+            font-family: "Lexend Deca", sans-serif;
+            background-color: #fdfcf9;
+            color: #39190F;
+            padding: 20px;
+            line-height: 1.6;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 950px;
+            background-color: #fffaf5;
+            border: 3px solid #d8b99b;
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 6px 6px 0 #b08968;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-h1 {
-  font-size: 28px;
-  margin-bottom: 8px;
-  color: #6f4e37;
-}
+        /* ==================== ENCABEZADOS ==================== */
+        .banner { text-align: center; margin-bottom: 10px; }
+        .h1 {
+            font-family: "Playwrite GB J", cursive;
+            text-align: center;
+            font-size: 26px;
+            color: #6f4e37;
+            background: #f3e5d0;
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 15px;
+            border: 2px dashed #b08968;
+            box-shadow: 2px 2px 0 #a47551;
+        }
+        h1 {
+            animation-duration: 3s;
+            animation-name: slidein;
+            animation-direction: normal;
+            animation-iteration-count: 1;
+            animation-timing-function: ease-out;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        @keyframes slidein {
+            from { transform: translateX(-100%); }
+            to   { transform: translateX(0%); }
+        }
 
-p {
-  margin-bottom: 20px;
-  color: #6b4b39;
-}
+        .meta {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #8c5c42;
+            animation: slidein 3s ease-out 1;
+            margin-bottom: 20px;
+        }
 
-.grid-actividades {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
-}
+        /* ==================== GRID DE ACTIVIDADES ==================== */
+        .grid-actividades {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            opacity: 0;
+            animation: fadein 1.2s ease-in forwards;
+            animation-delay: 0.5s;
+            justify-content: center;
+        }
+        @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
 
-.card-actividad {
-  display: block;
-  padding: 16px;
-  border-radius: 10px;
-  border: 2px solid #d8b99b;
-  background: #fffdf9;
-  text-decoration: none;
-  color: #39190F;
-  box-shadow: 3px 3px 0 #b08968;
-  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
-}
+        .card-actividad {
+            display: block;
+            background-color: #fffdf9;
+            border: 2px solid #e3c9b1;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 3px 3px 0 #d1a280;
+            text-decoration: none;
+            color: #39190F;
+            transition: all 0.3s ease;
+            width: 280px;
+        }
+        .card-actividad:hover {
+            background: #f7ede2;
+            transform: translateY(-3px);
+            box-shadow: 4px 4px 0 #b08968;
+        }
+        .card-actividad:active {
+            transform: translateY(-1px);
+            box-shadow: 2px 2px 0 #a47551;
+        }
 
-.card-actividad h3 {
-  margin-bottom: 4px;
-  font-size: 18px;
-}
+        .card-actividad h3 {
+            font-size: 18px;
+            color: #6f4e37;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .card-actividad p {
+            font-size: 14px;
+            color: #5c4033;
+            margin: 0;
+        }
 
-.card-actividad p {
-  margin: 0;
-  font-size: 14px;
-  color: #7a5a46;
-}
-
-.card-actividad:hover {
-  background: #f7e9d9;
-  transform: translateY(-2px);
-  box-shadow: 4px 4px 0 #a47551;
-}
+        @media (max-width: 600px) {
+            .grid-actividades {
+                grid-template-columns: 1fr;
+            }
+        }
