@@ -19,66 +19,103 @@
       padding:20px;
       line-height:1.6;
       font-size:16px;
-      display:flex;
-      justify-content:center;
-      align-items:flex-start;
     }
 
     .container{
-      width:100%;
-      max-width:950px;
-      background-color:#fffaf5;
-      border:3px solid #d8b99b;
-      border-radius:8px;
-      padding:28px;
-      box-shadow:6px 6px 0 #b08968;
-      display:flex;
-      flex-direction:column;
-      gap:22px;
-      animation:fadein .8s ease-in forwards;
-    }
-    @keyframes fadein{
-      from{opacity:0;transform:translateY(6px)}
-      to{opacity:1;transform:none}
+      max-width: 950px;
+      background-color: #fffaf5;
+      border: 3px solid #d8b99b;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 6px 6px 0 #b08968;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin: 0 auto;
     }
 
     /* ==================== ENCABEZADOS ==================== */
-    .banner{text-align:center;margin-bottom:8px;}
-    .title{
-      font-family:"Playwrite GB J",cursive;
-      font-size:26px;
-      color:#6f4e37;
-      background:#f3e5d0;
-      display:inline-block;
-      padding:12px 22px;
-      border-radius:14px;
-      border:2px dashed #b08968;
-      box-shadow:2px 2px 0 #a47551;
-      animation:slidein 1s ease-out both;
+    .banner{
+        text-align: center;
+        margin-bottom: 20px;
+    }  
+    .h1{
+        font-family: "Playwrite GB J", cursive;
+        align-items: center;
+        text-align: center;
+        font-size: 26px;
+        color: #6f4e37;
+        background: #f3e5d0;
+        display: inline-block;
+        padding: 12px 25px;
+        border-radius: 15px;
+        border: 2px dashed #b08968;
+        box-shadow: 2px 2px 0 #a47551;
     }
-    @keyframes slidein{
-      from{transform:translateX(-100%)}
-      to{transform:translateX(0)}
+    h1{
+        animation-duration: 3s;
+        animation-name: slidein;
+        animation-direction: normal;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-out;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+    @keyframes slidein {
+        from {
+        margin-left: auto;
+        margin-right: auto;
+        transform: translateX(-100%);
+        width: 300%;
+        }
+        to {
+        margin-left: auto;
+        margin-right: auto;
+        transform: translateX(0%);
+        width: 100%;
+        }
     }
 
     .meta{
-      margin-top:6px;
-      font-size:14px;
-      color:#8c5c42;
-      animation:slidein 1s .1s ease-out both;
+            margin-top: 8px;
+            font-size: 14px;
+            color: #8c5c42;
+            animation-duration: 3s;
+            animation-name: slidein;
+            animation-direction: normal;
+            animation-iteration-count: 1;
+            animation-timing-function: ease-out;
     }
 
-    /* ==================== INSTRUCCIONES ==================== */
     .instructions{
-      background:#f7ede2;
-      border:2px solid #e3c9b1;
-      padding:14px 16px;
-      border-radius:10px;
-      color:#5c4033;
-      box-shadow:3px 3px 0 #b08968;
+            background-color: #f7ede2;
+            border: 2px solid #e3c9b1;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #5c4033;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #a47551;
+            animation: blink-caret 0.7s step-end 7;
+            animation-fill-mode: forwards;
     }
-    .instructions strong{color:#a47551;}
-    .instructions ul{margin-top:6px;list-style:disc;padding-left:20px;}
+
+    @keyframes blink-caret {
+        from, to { border-color: transparent }
+        50% { border-color: #a47551; }
+    }
+    .instructions strong{
+            color: #a47551;
+            font-size: 16px;
+    }
+    .instructions ul{
+            margin-top: 8px;
+            list-style-type: disc;
+            padding-left: 20px;
+    }
 
     /* ==================== BOTONES BASE ==================== */
     .btn-base{
@@ -145,7 +182,7 @@
       box-shadow:1px 1px 0 #6f4e37;
     }
 
-    /* ==================== FORM CON DOS COLUMNAS ==================== */
+    /* ==================== FORM CON DOS COLUMNAS ==================== */    
     .converter-wrapper{
       background:#fffdf9;
       border:2px solid #e3c9b1;
@@ -160,6 +197,11 @@
       gap:20px;
     }
 
+    @keyframes fadein {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+    
     .column{
       background:#fffdf9;
       border:2px solid #e3c9b1;
@@ -346,10 +388,11 @@
         cursor: pointer;
         box-shadow: 3px 3px 0 #6f4e37;
         display: block;
-        margin: 10px auto;
+        margin: 20px auto;
         text-decoration: none;
         text-align: center;
         width: fit-content;
+        max-width: 950px;
         opacity: 0;
         animation: fadein 1.2s ease-in forwards;
         animation-delay: 0.3s;
@@ -369,16 +412,15 @@
 
     <!-- Banner -->
     <div class="banner">
-      <h1 class="title">Calculadora de Expresiones Algebraicas</h1>
+      <h1><span class="h1">Calculadora de Expresiones Algebraicas</span></h1>
       <p class="meta">
-        Tecnológico de Software · Fundamentos de Álgebra · 1°C ·
-        Prof. Jorge Javier Pedrozo Romero · Michelle Cámara González
+        Tecnológico de Software · Fundamentos de Álgebra · Prof. Jorge Javier Pedrozo Romero · 1°C · Cuatrimestre 1 · Michelle Cámara González
       </p>
     </div>
 
     <!-- Instrucciones -->
-    <section class="instructions">
-      <strong>✦ Cómo usar:</strong>
+    <div class="instructions">
+      <strong>✦ Instrucciones: </strong>
       <ul>
         <li>
           En la columna de <em>Lenguaje Natural</em> escribe frases como
@@ -395,7 +437,7 @@
           Marca si el resultado es satisfactorio o si necesita mejora, y agrega nuevos patrones personalizados.
         </li>
       </ul>
-    </section>
+    </div>
 
     <!-- Conversor principal -->
     <section class="converter-wrapper">
@@ -524,8 +566,9 @@
       </div>
     </section>
 
+    </div>
+
     <a href="../../index.html" class="back-btn">← Regresar al Portafolio</a>
-  </div>
 
 <script>
     // Variables globales

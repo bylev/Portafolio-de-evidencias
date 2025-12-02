@@ -23,16 +23,15 @@
             padding: 20px;
             line-height: 1.6;
             font-size: 16px;
-            display: flex;
-            justify-content: center;
         }
         .container {
             width: 100%;
-            max-width: 950px; /* corregido sin espacio */
+            max-width: 950px;
+            margin: 0 auto;
             background-color: #fffaf5;
             border: 3px solid #d8b99b;
-            border-radius: 12px;
-            padding: 28px;
+            border-radius: 8px;
+            padding: 30px;
             box-shadow: 6px 6px 0 #b08968;
             display: flex;
             flex-direction: column;
@@ -40,7 +39,7 @@
         }
 
         /* ==================== ENCABEZADOS ==================== */
-        .banner { text-align: center; margin-bottom: 10px; }
+        .banner { text-align: center; margin-bottom: 20px; }
         .h1 {
             font-family: "Playwrite GB J", cursive;
             text-align: center;
@@ -54,7 +53,7 @@
             box-shadow: 2px 2px 0 #a47551;
         }
         h1 {
-            animation-duration: 3s;
+            animation-duration: 1.5s;
             animation-name: slidein;
             animation-direction: normal;
             animation-iteration-count: 1;
@@ -65,15 +64,29 @@
             text-align: center;
         }
         @keyframes slidein {
-            from { transform: translateX(-100%); }
-            to   { transform: translateX(0%); }
+            from {
+            margin-left: auto;
+            margin-right: auto;
+            transform: translateX(-100%);
+            width: 300%;
+            }
+            to {
+            margin-left: auto;
+            margin-right: auto;
+            transform: translateX(0%);
+            width: 100%;
+            }
         }
 
         .meta {
             margin-top: 8px;
             font-size: 14px;
             color: #8c5c42;
-            animation: slidein 3s ease-out 1;
+            animation-duration: 1.5s;
+            animation-name: slidein;
+            animation-direction: normal;
+            animation-iteration-count: 1;
+            animation-timing-function: ease-out;
         }
 
         /* ==================== CAJA DE INSTRUCCIONES ==================== */
@@ -81,7 +94,7 @@
             background-color: #f7ede2;
             border: 2px solid #e3c9b1;
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 14px;
             color: #5c4033;
             overflow: hidden;
@@ -90,9 +103,21 @@
             animation: blink-caret 0.7s step-end 7;
             animation-fill-mode: forwards;
         }
-        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #a47551; } }
-        .instructions strong { color: #a47551; font-size: 16px; }
-        .instructions ul { margin-top: 8px; list-style-type: disc; padding-left: 20px; white-space: normal; }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #a47551; }
+        }
+        .instructions strong {
+            color: #a47551;
+            font-size: 16px;
+        }
+        .instructions ul {
+            margin-top: 8px;
+            list-style-type: disc;
+            padding-left: 20px;
+            white-space: normal;
+        }
 
         /* ==================== SECCIONES DE FORMULARIO ==================== */
         .form-section {
@@ -105,7 +130,7 @@
             flex-direction: column;
             gap: 12px;
             opacity: 0;
-            animation: fadein 1.2s ease-in forwards;
+            animation: fadein 0.8s ease-in forwards;
         }
         @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
         .form-section h2 {
@@ -168,7 +193,7 @@
             margin-left: auto;
             margin-right: auto;
             opacity: 0;
-            animation: fadein 1.2s ease-in forwards;
+            animation: fadein 0.8s ease-in forwards;
         }
         .clear-btn:hover { background: #6f4e37; box-shadow: 2px 2px 0 #39190F; }
         .clear-btn:active { box-shadow: none; transform: translateY(2px); }
@@ -205,12 +230,12 @@
             cursor: pointer;
             box-shadow: 3px 3px 0 #6f4e37;
             display: block;
-            margin: 10px auto;
+            margin: 20px auto;
             text-decoration: none;
             text-align: center;
             width: fit-content;
             opacity: 0;
-            animation: fadein 1.2s ease-in forwards;
+            animation: fadein 0.8s ease-in forwards;
             animation-delay: 0.3s;
         }
         .back-btn:hover { background: #39190F; box-shadow: 2px 2px 0 #6f4e37; }
@@ -262,8 +287,9 @@
         </section>
 
         <button class="clear-btn" onclick="clearAll()">🍪 Limpiar Todo</button>
-        <a href="../../index.html" class="back-btn">← Regresar al Portafolio</a>
     </div>
+
+    <a href="../../index.html" class="back-btn">← Regresar al Portafolio</a>
 
 <script>
 // ==================== UTILIDAD ====================

@@ -92,7 +92,57 @@
                 animation-timing-function: ease-out;
         }
 
+        .instructions{
+                background-color: #f7ede2;
+                border: 2px solid #e3c9b1;
+                padding: 15px;
+                border-radius: 8px;
+                font-size: 14px;
+                color: #5c4033;
+                overflow: hidden;
+                white-space: nowrap;
+                border-right: 2px solid #a47551;
+                animation: blink-caret 0.7s step-end 7;
+                animation-fill-mode: forwards;
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #a47551; }
+        }
+        .instructions strong{
+                color: #a47551;
+                font-size: 16px;
+        }
+        .instructions ul{
+                margin-top: 8px;
+                list-style-type: disc;
+                padding-left: 20px;
+        }
+
         /* ==================== SECCIONES Y FORMULARIOS ==================== */
+        .form-section{
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            background-color: #fffdf9;
+            border: 2px solid #e3c9b1;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 3px 3px 0 #d1a280;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+            /* Animación de aparición */
+            opacity: 0;
+            animation: fadein 1.2s ease-in forwards;
+        }
+
+        @keyframes fadein {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        
         section{ 
             padding: 22px 24px; 
             background-color: #fffdf9;
@@ -188,11 +238,14 @@
             cursor: pointer;
             box-shadow: 3px 3px 0 #6f4e37;
             display: block;
-            margin: 10px auto 0;
+            margin: 20px auto;
             text-decoration: none;
             text-align: center;
             width: fit-content;
-            transition: transform .02s ease, box-shadow .2s ease;
+            max-width: 950px;
+            opacity: 0;
+            animation: fadein 1.2s ease-in forwards;
+            animation-delay: 0.3s;
         }
         .back-btn:hover { background: #39190F; box-shadow: 2px 2px 0 #6f4e37; }
         .back-btn:active { box-shadow: none; transform: translateY(2px); }
@@ -301,11 +354,14 @@
         /* Paneles */
         .info-panels{
             display:grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 16px;
         }
         @media (max-width: 960px){
-            .info-panels{ grid-template-columns: 1fr; }
+            .info-panels{ 
+                grid-template-columns: 1fr 1fr 1fr; 
+                gap: 12px;
+            }
             .controls .input-group{ grid-template-columns: 1fr; }
         }
 
@@ -492,9 +548,19 @@
 </head>
 <body>
     <div class="container">
-        <h1>Visualizador de la recta numérica</h1>
-        <div class= "banner">
+        <div class="banner">
+        <h1><span class="h1">Visualizador de la recta numérica</span></h1>
         <p class="meta">Tecnológico de Software · Fundamentos de Álgebra · Prof. Jorge Javier Pedrozo Romero · 1°C · Cuatrimestre 1 · Michelle Cámara González</p></div>
+        <div class="instructions">
+            <strong>✦ Instrucciones: </strong>
+            <ul>
+                <li>Ingresa números en diferentes formatos: decimales, fracciones, raíces, constantes</li>
+                <li>Usa π para pi, √ para raíces cuadradas, e para número de Euler</li>
+                <li>Los números se clasificarán automáticamente por tipo (naturales, enteros, racionales, irracionales)</li>
+                <li>Haz clic en los números predefinidos para agregarlos rápidamente</li>
+                <li>Los puntos en la recta numérica muestran la clasificación por color</li>
+            </ul>
+        </div>
 
     <section class="controls">
       <h2>Controles de entrada</h2>
@@ -609,11 +675,12 @@
           </div>
         </div>
           <div class="distance-placegolder">
-            <a href="../../index.html" class="back-btn">← Regresar al Portafolio</a>
           </
       </div>
     </section>
   </div>
+
+  <a href="../../index.html" class="back-btn">← Regresar al Portafolio</a>
 
   <script>
     // ======== ESTADO GLOBAL ========

@@ -248,16 +248,19 @@
             cursor: pointer;
             box-shadow: 3px 3px 0 #6f4e37;
             display: block;
-            margin: 10px auto;
+            margin: 20px auto;
             text-decoration: none;
             text-align: center;
             width: fit-content;
-            opacity: 0;
-            animation: fadein 1.2s ease-in forwards;
-            animation-delay: 0.3s;
+            max-width: 950px;
         }
         .back-btn:hover { background: #39190F; box-shadow: 2px 2px 0 #6f4e37; }
         .back-btn:active { box-shadow: none; transform: translateY(2px); }
+
+        @keyframes fadein {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
 
         @media (max-width:820px){ 
             .controls .grid{grid-template-columns:1fr} 
@@ -275,8 +278,8 @@
 </head>
 <body>
   <div class="container">
-        <h1>Calculadora de Productos Notables</h1>
-        <div class= "banner">
+        <div class="banner">
+        <h1><span class="h1">Calculadora de Productos Notables</span></h1>
         <p class="meta">Tecnológico de Software · Fundamentos de Álgebra · Prof. Jorge Javier Pedrozo Romero · 1°C · Cuatrimestre 1 · Michelle Cámara González</p></div>
 
         <div class="instructions">
@@ -370,11 +373,9 @@
         </div>
         <div id="historial" class="historial"></div>
       </section>
-
-      <a href="../../index.html" class="back-btn">← Regresar al Portafolio</a>
     </div>
-  </div>
-</body>
+
+    <a href="../../index.html" class="back-btn">← Regresar al Portafolio</a>
 
   <script>
     let historialCalculos = [];

@@ -22,10 +22,9 @@
             padding: 20px;
             line-height: 1.6;
             font-size: 16px;
-
         }
         .container {
-            max-width: 950 px;
+            max-width: 950px;
             background-color: #fffaf5;
             border: 3px solid #d8b99b;
             border-radius: 8px;
@@ -34,6 +33,7 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            margin: 0 auto;
         }
 
         /* ==================== ENCABEZADOS ==================== */
@@ -223,10 +223,11 @@
         cursor: pointer;
         box-shadow: 3px 3px 0 #6f4e37;
         display: block;
-        margin: 10px auto;
+        margin: 20px auto;
         text-decoration: none;
         text-align: center;
         width: fit-content;
+        max-width: 950px;
         opacity: 0;
         animation: fadein 1.2s ease-in forwards;
         animation-delay: 0.3s;
@@ -245,8 +246,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Calculadora de Conversiones de Números Complejos</h1>
-        <div class= "banner">
+        <div class="banner">
+        <h1><span class="h1">Calculadora de Conversiones de Números Complejos</span></h1>
         <p class="meta">Tecnológico de Software · Fundamentos de Álgebra · Prof. Jorge Javier Pedrozo Romero · 1°C · Cuatrimestre 1 · Michelle Cámara González</p></div>
         <div class="instructions">
             <strong>✦ Instrucciones: </strong>
@@ -298,8 +299,9 @@
             <div class="result" id="exponential-result">Ingresa los valores arriba</div>
         </div>
         <button class="clear-btn" onclick="clearAll()">🍪 Limpiar Todo</button>
-        <a href="../../index.html" class="back-btn">← Regresar al Portafolio</a>
     </div>
+
+    <a href="../../index.html" class="back-btn">← Regresar al Portafolio</a>
 </body>
 <script>
   
