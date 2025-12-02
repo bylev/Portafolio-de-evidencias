@@ -19,13 +19,7 @@ Portafolio-de-evidencias/
 │
 ├── css/
 │   └── style.css               # Hoja de estilos global única
-│
-├── js/
-│   └── script_global.js        # Script global (si es necesario)
-│
-├── assets/
-│   └── images/                 # Imágenes comunes del proyecto
-│
+|
 ├── actividades/
 │   ├── actividad02/
 │   │   ├── index.html          # Actividad 2: Números Complejos
