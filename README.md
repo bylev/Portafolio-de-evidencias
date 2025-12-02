@@ -26,41 +26,41 @@ Reunir y presentar de manera organizada las evidencias de aprendizaje obtenidas 
 
 ```
 Portafolio-de-evidencias/
-├── index.html                  # Página principal (menú del portafolio)
+├── 🏠 index.html                  # Página principal (menú del portafolio)
 │
-├── css/
-│   └── style.css               # Hoja de estilos global única
-|
-├── actividades/
-│   ├── actividad02/
-│   │   ├── index.html          # Actividad 2: Números Complejos
+├── 🎨 css/
+│   └── style.css                 # Hoja de estilo global del portafolio
+│
+├── 🧩 actividades/
+│   ├── 🟦 actividad02/
+│   │   ├── index.html            # ⭐ Actividad 2: Números Complejos
 │   │   └── script.js
 │   │
-│   ├── actividad04/
-│   │   ├── index.html          # Actividad 4: Polar → Exponencial
+│   ├── 🟩 actividad04/
+│   │   ├── index.html            # 🔄 Actividad 4: Polar → Exponencial
 │   │   └── script.js
 │   │
-│   ├── actividad06/
-│   │   ├── index.html          # Actividad 6: Expresiones Algebraicas
+│   ├── 🟧 actividad06/
+│   │   ├── index.html            # 🔤 Actividad 6: Expresiones Algebraicas
 │   │   └── script.js
 │   │
-│   ├── actividad08/
-│   │   ├── index.html          # Actividad 8: Calculadora Operaciones
+│   ├── 🟨 actividad08/
+│   │   ├── index.html            # 🧮 Actividad 8: Calculadora Operaciones
 │   │   └── script.js
 │   │
-│   ├── actividad10/
-│   │   ├── index.html          # Actividad 10: Productos Notables
+│   ├── 🟥 actividad10/
+│   │   ├── index.html            # 📐 Actividad 10: Productos Notables
 │   │   └── script.js
 │   │
-│   ├── actividad12/
-│   │   ├── index.html          # Actividad 12: Factorización
+│   ├── 🟪 actividad12/
+│   │   ├── index.html            # ➗ Actividad 12: Factorización
 │   │   └── script.js
 │   │
-│   └── actividad14/
-│       ├── index.html          # Actividad 14: Ecuaciones Primer Grado
+│   └── 🟫 actividad14/
+│       ├── index.html            # ⚖️ Actividad 14: Ecuaciones Primer Grado
 │       └── script.js
 │
-└── README.md                   # Información del proyecto
+└── 📘 README.md                  # Información del proyecto
 
 ```
 
